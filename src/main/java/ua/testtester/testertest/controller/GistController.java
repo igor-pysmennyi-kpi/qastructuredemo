@@ -49,8 +49,8 @@ public class GistController {
     }
 
     //todo: consider merging it with getall() and using just one param. No time now, need to set sail and row!
-    @GetMapping
-    public Page<GistDTO> getAllValidUntil(LocalDateTime doom, Pageable pageable) {
+    @GetMapping("/active")
+    public Page<GistDTO> getAllValidUntil(@RequestParam("until") LocalDateTime doom, Pageable pageable) {
         return service.getAllValidUntil(doom, pageable);
     }
 }

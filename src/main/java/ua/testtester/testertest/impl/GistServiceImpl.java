@@ -4,13 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ua.testtester.testertest.exception.ResourceNotFoundException;
 import ua.testtester.testertest.model.GistModelMapper;
+import ua.testtester.testertest.model.PageMapper;
 import ua.testtester.testertest.model.dto.GistDTO;
+import ua.testtester.testertest.model.dto.PagedResource;
 import ua.testtester.testertest.model.entity.Gist;
 import ua.testtester.testertest.model.repository.GistRepository;
 import ua.testtester.testertest.service.GistService;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -20,11 +22,13 @@ import java.util.stream.Collectors;
 @Service
 public class GistServiceImpl implements GistService {
     private final GistModelMapper modelMapper;
+    private final PageMapper pageMapper;
     private final GistRepository repository;
 
     @Autowired
-    public GistServiceImpl(GistModelMapper modelMapper, GistRepository repository) {
+    public GistServiceImpl(GistModelMapper modelMapper, PageMapper pageMapper, GistRepository repository) {
         this.modelMapper = modelMapper;
+        this.pageMapper = pageMapper;
         this.repository = repository;
     }
 
@@ -55,7 +59,7 @@ public class GistServiceImpl implements GistService {
         return repository
                 .findById(id)
                 .map(modelMapper::toDto)
-                .orElseThrow(() -> new EntityNotFoundException("Could not find gist with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find gist with id " + id));
     }
 
     @Override
@@ -67,10 +71,10 @@ public class GistServiceImpl implements GistService {
     }
 
     @Override
-    public Page<GistDTO> getAllValidUntil(LocalDateTime doom, Pageable pageable) {
+    public PagedResource<GistDTO> getAllValidUntil(LocalDateTime doom, Pageable pageable) {
         Objects.requireNonNull(doom);
-        return repository
-                .findAllByValidUntilLessThan(doom,pageable)
-                .map(modelMapper::toDto);
+        return pageMapper.toPagedResource(repository
+                .findAllByValidUntilLessThanOrderByValidUntil(doom, pageable)
+                .map(modelMapper::toDto));
     }
 }

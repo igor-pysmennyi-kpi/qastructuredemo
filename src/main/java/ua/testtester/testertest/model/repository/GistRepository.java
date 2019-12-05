@@ -9,5 +9,5 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface GistRepository extends JpaRepository<Gist, UUID> {
-    Page<Gist> findAllByValidUntilLessThan(LocalDateTime doom, Pageable page);
+    Page<Gist> findAllByValidUntilLessThanOrderByValidUntil(LocalDateTime doom, Pageable page);
 }

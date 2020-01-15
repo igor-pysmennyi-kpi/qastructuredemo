@@ -14,3 +14,9 @@ API documentation of our secure service can be found [here](https://www.getpostm
 We expect that you will write tests suitable for automation and add them to our test package. Also we hope that you come 
 up with ideas on our almost perfect API (with motivation, of course) and write them all to text file. And will add this file to the pull request to this repo together 
 with implemented tests. 
+
+To run app via maven:
+    mvn clean spring-boot:run
+
+To run tests via maven:
+    mvn clean verify

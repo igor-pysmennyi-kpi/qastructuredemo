@@ -16,7 +16,7 @@ up with ideas on our almost perfect API (with motivation, of course) and write t
 with implemented tests. 
 
 To run app via maven:
-    mvn clean spring-boot:run
+    <pre>mvn clean spring-boot:run</pre>
 
 To run tests via maven:
-    mvn clean verify
+    <pre>mvn clean verify</pre>

@@ -1,16 +1,15 @@
-package ua.testtester.testertest.controller;
+package ua.kpi.testertest.controller;
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import ua.testtester.testertest.exception.ConflicException;
-import ua.testtester.testertest.model.dto.GistDTO;
-import ua.testtester.testertest.model.dto.PagedResource;
-import ua.testtester.testertest.service.GistService;
+import ua.kpi.testertest.exception.ConflicException;
+import ua.kpi.testertest.model.dto.GistDTO;
+import ua.kpi.testertest.model.dto.PagedResource;
+import ua.kpi.testertest.service.GistService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/gist")
-@Log4j2
+@Slf4j
 public class GistController {
     private final GistService service;
 

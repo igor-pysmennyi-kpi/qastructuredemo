@@ -1,8 +1,8 @@
-package ua.testtester.testertest.model;
+package ua.kpi.testertest.model;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import ua.testtester.testertest.model.dto.PagedResource;
+import ua.kpi.testertest.model.dto.PagedResource;
 
 @Service
 public class PageMapper {

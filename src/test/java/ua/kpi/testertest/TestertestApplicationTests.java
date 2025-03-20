@@ -1,4 +1,4 @@
-package ua.testtester.testertest;
+package ua.kpi.testertest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

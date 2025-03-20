@@ -1,9 +1,9 @@
-package ua.testtester.testertest.model.repository;
+package ua.kpi.testertest.model.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import ua.testtester.testertest.model.entity.Gist;
+import ua.kpi.testertest.model.entity.Gist;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

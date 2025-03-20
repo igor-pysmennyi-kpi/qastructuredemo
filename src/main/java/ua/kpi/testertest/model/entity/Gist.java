@@ -1,10 +1,10 @@
-package ua.testtester.testertest.model.entity;
+package ua.kpi.testertest.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,11 +15,11 @@ import java.util.UUID;
 public class Gist {
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column
     private UUID id;
     private String author;
     private Type type;
     private String content;
+    private LocalDateTime validFrom;
     private LocalDateTime validUntil;
 }

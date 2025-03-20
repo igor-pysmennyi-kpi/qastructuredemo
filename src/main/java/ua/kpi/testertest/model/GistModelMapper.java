@@ -1,9 +1,9 @@
-package ua.testtester.testertest.model;
+package ua.kpi.testertest.model;
 
 import org.springframework.stereotype.Service;
-import ua.testtester.testertest.model.dto.GistDTO;
-import ua.testtester.testertest.model.entity.Gist;
-import ua.testtester.testertest.model.entity.Type;
+import ua.kpi.testertest.model.dto.GistDTO;
+import ua.kpi.testertest.model.entity.Gist;
+import ua.kpi.testertest.model.entity.Type;
 
 @Service
 public class GistModelMapper {
@@ -14,6 +14,7 @@ public class GistModelMapper {
         gist.setType(Type.valueOf(source.getType().name()));//todo:attention - bug here
         gist.setContent(source.getContent());
         gist.setValidUntil(source.getValidUntil());
+        //are there any more bugs?
         return gist;
     }
 

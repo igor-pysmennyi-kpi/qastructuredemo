@@ -1,4 +1,4 @@
-package ua.testtester.testertest;
+package ua.kpi.testertest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

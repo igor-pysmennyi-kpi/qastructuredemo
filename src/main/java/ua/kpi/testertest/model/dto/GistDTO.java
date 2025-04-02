@@ -19,10 +19,14 @@ public class GistDTO {
         PROMO, INFO
     }
 
-    UUID uuid;
+    UUID id;
     String author;
     Type type;
     String content;
     LocalDateTime validFrom;
     LocalDateTime validUntil;
+
+    //додали час, коли з сервера дістали, раптом хтось ще поедітає
+    LocalDateTime retrievedTime;
+
 }

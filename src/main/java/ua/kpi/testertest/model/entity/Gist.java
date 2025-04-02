@@ -22,4 +22,5 @@ public class Gist {
     private String content;
     private LocalDateTime validFrom;
     private LocalDateTime validUntil;
+
 }

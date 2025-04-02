@@ -1,6 +1,5 @@
 package ua.kpi.testertest.controller;
 
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +34,7 @@ public class GistController {
     public GistDTO updateGist(@PathVariable(required = false) UUID id,
                               @RequestBody GistDTO source) {
         //todo: btw, why do we need id here?! it's already in the body
-        if (id != null && !source.getUuid().equals(id))
+        if (id != null && !source.getId().equals(id))
             throw new ConflicException();
         return service.updateGist(source);
     }

@@ -40,7 +40,7 @@ class GistModelMapperTest {
         Gist actual = mapper.fromDto(source);
 
         //assert
-        assertThat(actual).usingRecursiveComparison().isEqualTo(aGist());
+        assertThat(actual).isEqualTo(aGist());
     }
 
 

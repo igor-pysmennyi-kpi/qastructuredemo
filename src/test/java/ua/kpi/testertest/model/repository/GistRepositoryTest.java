@@ -49,6 +49,10 @@ class GistRepositoryTest {
         Gist gist = new Gist();
         gist.setValidUntil(LocalDateTime.now().minusDays(1));
         gistRepository.save(gist);
+
+        gist = new Gist();
+        gist.setValidUntil(LocalDateTime.now().plusDays(1));
+        gistRepository.save(gist);
     }
 
     @AfterEach

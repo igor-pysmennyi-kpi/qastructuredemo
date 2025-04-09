@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<postgres.log.wait>(?s)database system is ready to accept connections.*database system is ready to accept connections</postgres.log.wait>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -37,6 +38,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 <!--		<dependency>-->
 <!--			<groupId>com.h2database</groupId>-->
@@ -75,7 +80,23 @@
 			<version>1.20.6</version>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.tomakehurst</groupId>
+			<artifactId>wiremock-jre8</artifactId>
+			<version>2.35.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.toomuchcoding.jsonassert</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>0.8.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -103,6 +124,128 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.46.0</version>
+				<executions>
+					<execution>
+						<id>start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<images>
+								<image>
+									<name>supabase/postgres:15.1.0.131</name>
+									<alias>postgres</alias>
+									<run>
+										<env>
+											<POSTGRES_DB>somedb</POSTGRES_DB>
+											<POSTGRES_USER>postgres</POSTGRES_USER>
+											<POSTGRES_PASSWORD>postgres</POSTGRES_PASSWORD>
+										</env>
+										<wait>
+											<log>
+												${postgres.log.wait}
+											</log>
+											<time>10000</time>
+										</wait>
+										<ports>
+											<port>5433:5432</port>
+										</ports>
+									</run>
+								</image>
+								<image>
+									<alias>testtertest</alias>
+									<name>kpi/testtertest:${project.version}</name>
+									<build>
+										<dockerFile>${project.basedir}/Dockerfile</dockerFile>
+										<args>
+											<ARTIFACT_NAME>${project.artifactId}-${project.version}</ARTIFACT_NAME>
+										</args>
+										<tags>
+											<tag>latest</tag>
+										</tags>
+									</build>
+									<run>
+										<dependsOn>
+											<container>sqs</container>
+										</dependsOn>
+										<wait>
+											<http>
+												<url>http://localhost:8888/gist-api/actuator/health</url>
+											</http>
+											<time>60000</time>
+										</wait>
+										<env>
+											<SPRING_PROFILES_ACTIVE>test</SPRING_PROFILES_ACTIVE>
+										</env>
+										<log>
+											<enabled>true</enabled>
+										</log>
+										<links>
+											<link>postgres</link>
+											<link>sqs</link>
+											<link>holiday-api</link>
+										</links>
+										<ports>
+											<port>8888:8080</port>
+										</ports>
+									</run>
+								</image>
+								<!-- LocalStack for testing AWS integrations against fakes-->
+								<image>
+									<name>localstack/localstack:4.0.3</name>
+									<alias>sqs</alias>
+									<run>
+										<ports>
+											<port>4566:4566</port>
+										</ports>
+										<env>
+											<SERVICES>sqs</SERVICES>
+											<SQS_PROVIDER>elasticmq</SQS_PROVIDER>
+											<HOSTNAME_EXTERNAL>sqs</HOSTNAME_EXTERNAL>
+											<AWS_SECRET_ACCESS_KEY>xxx</AWS_SECRET_ACCESS_KEY>
+											<AWS_ACCESS_KEY_ID>xxx</AWS_ACCESS_KEY_ID>
+											<AWS_DEFAULT_REGION>eu-central-1</AWS_DEFAULT_REGION>
+										</env>
+									</run>
+								</image>
+								<image>
+									<name>wiremock/wiremock:2.35.0</name>
+									<alias>holiday-api</alias>
+									<run>
+										<ports>
+											<port>21342:8080</port>
+										</ports>
+									</run>
+								</image>
+							</images>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

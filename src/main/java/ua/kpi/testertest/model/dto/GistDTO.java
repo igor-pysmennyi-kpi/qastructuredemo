@@ -29,4 +29,5 @@ public class GistDTO {
     //додали час, коли з сервера дістали, раптом хтось ще поедітає
     LocalDateTime retrievedTime;
 
+    Boolean createdOnHoliday;
 }

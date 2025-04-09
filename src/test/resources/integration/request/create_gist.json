@@ -1,0 +1,7 @@
+{
+  "author": "John Doe",
+  "type": "PROMO",
+  "content": "This is a promotional gist.",
+  "validFrom": "2023-10-01T10:00:00",
+  "validUntil": "2023-10-15T10:00:00"
+}

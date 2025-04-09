@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class GistDtoRetrievedTimeEnricher implements GistDtoEnricher {
     @Override
     public GistDTO enrich(GistDTO gistDto) {
-        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime currentTime = LocalDateTime.now();//todo: how to properly test this crap?
         return gistDto.toBuilder()
                 .retrievedTime(currentTime)
                 .build();//як це протестити. розкажи про ІоС

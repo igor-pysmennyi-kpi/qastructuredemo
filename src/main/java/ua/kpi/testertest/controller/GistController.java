@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/gist")
+@RequestMapping("/gists")
 @Slf4j
 public class GistController {
     private final GistService service;
@@ -38,6 +38,8 @@ public class GistController {
             throw new ConflicException();
         return service.updateGist(source);
     }
+
+
 
     @DeleteMapping("/{id}")
     public void deleteGist(@PathVariable UUID id) {

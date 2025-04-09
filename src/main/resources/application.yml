@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /gist-api
+spring:
+  application:
+    name: gist-api
+  datasource:
+    url: dbc:postgresql://localhost:5432/some-db
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+gistapi:
+  connect-timeout-duration: PT10S
+  read-timeout-duration: PT10S
+  holiday-api:
+    api-key: ${HOLIDAY_API_KEY}
+    base-uri: https://holidays.abstractapi.com

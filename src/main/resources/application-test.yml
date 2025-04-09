@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/somedb
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
+gistapi:
+  holiday-api:
+    api-key: unique-key
+    base-uri: http://holiday-api:8080
+
